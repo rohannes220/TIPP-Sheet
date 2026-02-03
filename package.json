@@ -1,0 +1,20 @@
+{
+  "name": "tipp-sheet",
+  "version": "1.0.0",
+  "description": "TIPP-Sheet is a mental-health resource platform designed to help users practice distress-tolerance skills using evidence-basedTIPP workflow.",
+  "homepage": "https://github.com/brpiperno/TIPP-Sheet#readme",
+  "bugs": {
+    "url": "https://github.com/brpiperno/TIPP-Sheet/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brpiperno/TIPP-Sheet.git"
+  },
+  "license": "MIT",
+  "author": "Yash Mahesh Burshe and Ben Piperno",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
