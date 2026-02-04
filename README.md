@@ -8,6 +8,6 @@ TIPP Sheet is a mental‑health resource platform designed to help users practic
 
 # Links
 - [Deployment URL](https://www.markdownguide.org "View the website as an end user")
-- [Design Documents](https://www.markdownguide.org "View planning materials")
+- [Design Documents](/designdoc/README.md "View planning materials")
 - [Presentation Slides](https://www.markdownguide.org "View my slides on this website's design and implmentation")
 - [Video Demonstration](https://www.markdownguide.org "Watch me present on this website")
