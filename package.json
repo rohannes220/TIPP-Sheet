@@ -1,7 +1,7 @@
 {
   "name": "tipp-sheet",
   "version": "1.0.0",
-  "description": "TIPP-Sheet is a mental-health resource platform designed to help users practice distress-tolerance skills using evidence-basedTIPP workflow.",
+  "description": "TIPP Sheet is a mental‑health resource platform designed to help users practice distress‑tolerance skills using the evidence‑based TIPP workflow (Temperature, Intense Exercise, Paced Breathing, Progressive Muscle Relaxation). The platform guides users through structured exercises and allows them to record distress levels before and after each session. Over time, users can review their logs and session summaries to better understand what techniques work best for them. This project does not store sensitive personal data, does not analyze free form mental health notes, and is intended as a convenient learning tool to practice distress tolerance for low-acuity users. It is not a replacement for supervised therapy, instead just one tool. TIPP-Shet is a MERN stack web platform created as an academic project for CS5610 Web Development at Northeastern University. This was created by **Yash Mahesh Burshe** and **Ben Piperno**.",
   "homepage": "https://github.com/brpiperno/TIPP-Sheet#readme",
   "bugs": {
     "url": "https://github.com/brpiperno/TIPP-Sheet/issues"
@@ -12,9 +12,20 @@
   },
   "license": "MIT",
   "author": "Yash Mahesh Burshe and Ben Piperno",
-  "type": "commonjs",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@eslint/css": "^0.14.1",
+    "@eslint/js": "^9.39.2",
+    "@eslint/json": "^1.0.0",
+    "@eslint/markdown": "^7.5.1",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "globals": "^17.3.0",
+    "prettier": "^3.8.1"
   }
 }
