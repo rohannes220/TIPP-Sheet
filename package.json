@@ -15,7 +15,7 @@
   "type": "module",
   "main": "backend.js",
   "scripts": {
-    "start": "node node_modules/nodemon/bin/nodemon.js backend/backend.js",
+    "start": "node node_modules/nodemon/bin/nodemon.js backend/backend.js -e js,html,css,json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
