@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en" class="h-100">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TIPP Sheet</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+    <meta
+      name="description"
+      content="Mental Health Resource for Distress Tolerance using TIPP (Temperature, Intense Exercise, Paced Breathing, Progressive Muscle Relaxation)"
+    />
+    <meta name="author" content="Ben Piperno and Yash Mahesh Burshe" />
+  </head>
+
+  <body class="d-flex h-100 text-center text-white bg-dark">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+      <header class="mb-auto">
+        <div>
+          <a class="nav-link" href="./index.html">
+            <h1 class="float-md-start mb-0">TIPP sheet</h1>
+          </a>
+          <nav class="nav nav-masthead justify-content-center float-md-end">
+            <a class="nav-link" href="./pre-practice.html">Practice</a>
+            <a class="nav-link" href="#">My Journey</a>
+            <a class="nav-link" href="#">My Account</a>
+          </nav>
+        </div>
+      </header>
+      <main class="px-3">
+        <h1>Temperature</h1>
+        <h6>Minimum: 30 seconds</h6>
+        <br />
+        <div class="d-flex flex-row">
+          <button class="btn btn-outline-primary"> <i class="bi bi-arrow-left"></i> </button>
+          <div class="d-flex flex-column">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12 text-center">
+                    <h1>Start Exercise?</h1>
+                  </div>
+                </div>
+                <div class="row mt-5">
+                  <div class="col-12">
+                    <div class="card">
+                      <div class="card-body">
+                        <div class="card text-white bg-primary">
+                          <div class="card-body text-center" id="time">
+                            <span class="digit" id="hr">00</span>
+                            <span class="txt">Hr</span>
+                            <span class="digit" id="min">00</span>
+                            <span class="txt">Min</span>
+                            <span class="digit" id="sec">00</span>
+                            <span class="txt">Sec</span>
+                            <span class="digit" id="count">00</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mt-3 justify-content-center">
+                  <button class="btn btn-success mx-2" id="start">Start</button>
+                  <button class="btn btn-primary mx-2" id="stop">Stop</button>
+                  <button class="btn btn-danger mx-2" id="reset">Reset</button>
+                </div>
+              </div>
+            </div>
+            <div class="card bg-warning">
+              <h5 class="card-header">Caution</h5>
+              <div class="card-body">
+                <p class="card-text">
+                  individuals with any heart disorder, a heart rate below normal
+                  levels due to medications, medical problems, anorexia, or
+                  bulimia should perform this only with permission of their
+                  medical provider. Those with an allergy to cold should not
+                  participate unless cleared by their physician. Adolescents
+                  should seek parental permission!
+                </p>
+              </div>
+            </div>
+            <div class="card bg-primary-subtle">
+              <h5 class="card-header">Background</h5>
+              <div class="card-body">
+                <p class="card-text">
+                  We can take control of our parasympathetic nervous system (PNS) by activating the dive reflex, which causes our heart to slow below its resting heart rate when immersed in very cold water without oxygen.
+
+                  This can be helpful in situations with high emotional distress, panic, or when feeling overwhelmed, anxiety interfering with tasks requiring concentration, inability to sleep, dissociation, anger, or other very intense emotions.
+                </p>
+              </div>
+            </div>
+            <div class="card bg-primary">
+              <h5 class="card-header">Instructions</h5>
+              <div class="card-body">
+                <p class="card-text">
+                  <p>The physical effect of cold water is very short-lived. It can be very easy for the intense emotions to resurface if you continue to focus on the emotional trigger. So, once your emotions are more in control, focus on problem solving (if the situation needs attention right away) or start practicing a different set of skills such as self-soothing or distracting yourself.</p>
+                  <ul>
+                    <li>Hold your breath and place your face (up to your temples) in a bowl of cold water for 10 to 20 seconds. Lift your face, breathe, and repeate up to 3 times. The longer the immersion and the colder the water, the stronger the effect. Don't make the water too cold, as it can cause facial pain during immersion.</li>
+                    <li>Sit on a chair and put an ice pack, ziplock bag of ice water, cold wet compress, or cold beverage can to your cheek bones (just below your eyes). If the item is too cold, wrap it in a cloth or paper towel. Wet the part of the item touching your face. Holding your breath at the same time can increase the effect</li>
+                    <li>Simply bending over a sink and splashing cold water on the forehead, eyes, and cheeks may be enough.</li>
+                  </ul>
+                </p>
+              </div>
+            </div>
+          </div>
+           <button class="btn btn-outline-primary"> <i class="bi bi-arrow-right"></i> </button>
+        </div>
+      </main>
+
+      <footer class="mt-auto text-white-50">
+        <a>&copy 2026 TIPPSheet.com</a>
+        <a>|</a>
+        <a>All rights reserved</a>
+      </footer>
+    </div>
+    <script type="module" src="./js/stopwatch.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+/* paced breathing animation */
+:root {
+  --grow-time: 4s;      /* time to expand */
+  --shrink-time: 7s;    /* time to contract */
+  --pause-time: 0.5s;   /* pause at max/min size */
+  --min-size: 80px;
+  --max-size: 180px;
+}
+
+.circle {
+  width: var(--min-size);
+  height: var(--min-size);
+  background: #0d6efd; /* Bootstrap primary color */
+  border-radius: 50%;
+  animation: pulse 
+    calc(var(--grow-time) + var(--pause-time) + var(--shrink-time) + var(--pause-time))
+    infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    width: var(--min-size);
+    height: var(--min-size);
+  }
+  25% {
+    width: var(--max-size);
+    height: var(--max-size);
+  }
+  50% {
+    width: var(--max-size);
+    height: var(--max-size);
+  }
+  75% {
+    width: var(--min-size);
+    height: var(--min-size);
+  }
+  100% {
+    width: var(--min-size);
+    height: var(--min-size);
+  }
+}
