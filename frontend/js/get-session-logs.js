@@ -1,6 +1,6 @@
 //TIPP session logging functionality
 
-console.log("Hello from frontend!");
+console.log("Frontend running!");
 
 function GetLogs() {
   //get all logs in a given time frame
@@ -17,7 +17,6 @@ function GetLogs() {
   };
 
   me.renderLogs = (logs) => {
-    console.log("renderLogs:", logs[0])
     const logDiv = document.getElementById("logs");
     logDiv.innerHTML = ""; //clear out any old cards
     for (const {emotionBefore, emotionAfter} of logs) {
