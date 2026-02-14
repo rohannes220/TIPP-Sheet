@@ -32,37 +32,9 @@
         </div>
       </header>
 
-      <main>
-        <div class="container">
-          <h2 class="mb-3">
-            After TIPP, I'd rate my distress at: <strong id="sliderValue">1</strong>
-          </h2>
-          <p>(0 = not at all, 5 = most intense)</p>
-          <input
-            type="range"
-            class="form-range"
-            min="0"
-            max="5"
-            step="1"
-            value="0"
-            id="stepSlider"
-          />
-          <div class="d-flex justify-content-between mt-2">
-            <span>0</span>
-            <span>1</span>
-            <span>2</span>
-            <span>3</span>
-            <span>4</span>
-            <span>5</span>
-          </div>
-          <h2 class="mb-3">The biggest emotion I'm feeling after TIPP is:</h2>
-          <!-- Row 1: Main Options -->
-          <div id="main-options" class="btn-group" role="group"></div>
-          <!-- Row 2: Sub Options -->
-          <div id="sub-options" class="mt-4"></div>
-          <a href="./select-practice.html" class="btn btn-lg btn-primary fw-bold"
-            >log practice</a
-          >
+      <main class="px-3">
+        <h1>My Journey!</h1>
+        <div class="container" id="logs">
         </div>
       </main>
 
@@ -72,8 +44,7 @@
         <a>All rights reserved</a>
       </footer>
     </div>
-    <script type="module" src="./js/emotion-wheel.js"></script>
-    <script type="module" src="./js/distress-slider.js"></script>
+    <script type="module" src="./js/get-session-logs.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
       integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
