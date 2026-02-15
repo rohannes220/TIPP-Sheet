@@ -1,4 +1,4 @@
-//TIPP session logging functionality
+//TIPP session log viewing functionality
 
 console.log("Frontend running!");
 
