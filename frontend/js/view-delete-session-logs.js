@@ -1,6 +1,17 @@
 //TIPP session log viewing functionality
 
-console.log("Frontend running!");
+
+// CONSTANTS
+
+
+// Variables
+
+let logId = '699253a7a17a677e8b914077';
+
+
+// FUNCTIONS
+
+
 
 function GetLogs() {
   //get all logs in a given time frame
@@ -41,8 +52,29 @@ function GetLogs() {
     console.log("Fetched logs", data);
     me.renderLogs(data.logs);
   };
+
+  me.deleteLog = async (logId) => {
+    console.log("FE: DELETE /api/log/:logId");
+    try {
+      const response = await fetch(`/api/log/${logId}`, {
+        method: "DELETE",
+        headers: {'Content-Type': 'application/json'},
+      });
+
+      if (!response.ok) {
+        console.error("FE: Failed to DELETE log data: ", response.status);
+        return;
+      }
+      const data = await response.json().catch(() => {});
+      console.log("Success! Response: ", data);
+    } catch (err) {
+      console.error("Network error patching log: ", err);
+    }
+  };
+
   return me;
 }
 
 const logs = GetLogs();
 logs.refreshLogs();
+logs.deleteLog(logId);

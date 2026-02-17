@@ -75,6 +75,20 @@ function MongoDB() {
     }
   }
 
+  me.deleteOne = async(idString) => {
+    console.log("MongoDB DeleteOne idString:", idString);
+        const {client, sessionLogsCollection} = connect();
+    try {
+      return await sessionLogsCollection.deleteOne(
+        {_id: new ObjectId(idString)}, 
+      );
+    }  catch (err) {
+      console.error("ERROR updating session log in MongoDB: ", err);
+    } finally {
+      client.close();
+    }
+  }
+
   return me;
 }
 const mongoDB = MongoDB();

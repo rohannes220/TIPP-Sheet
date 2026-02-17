@@ -48,7 +48,17 @@ router.get("/log", async (req, res) => {
 });
 
 //delete a specific log
-router.delete("/log/:logId", async (req, res) => {});
+router.delete("/log/:logId", async (req, res) => {
+  const logId = req.params.logId;
+  console.log(`sessionLogRouter: PATCH /api/${logId}`);
+  try {
+    const result = await tippDB.deleteOne(req.params.logId);
+    res.status(204).json(result);
+  } catch (error) {
+    console.log("ERROR: sessionLogRouter DELETE: ", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 
 //finalize a log (after a TIPP practice session)
 router.patch("/log/:logId", async (req, res) => {

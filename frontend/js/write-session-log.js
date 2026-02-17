@@ -120,7 +120,14 @@ async function postPreSessionLog() {
 }
 
 async function patchPostSessionLog() {
-  const requestBody = {distressLevel, emotion, tempTime, exerciseTime, breathingTime, relaxationTime};
+  const requestBody = {
+    distressLevel, 
+    emotion, 
+    tempTime, 
+    exerciseTime, 
+    breathingTime, 
+    relaxationTime
+  };
   console.log("FE: PATCH /api/log/:logId requestBody: ", requestBody);
 
   try {
