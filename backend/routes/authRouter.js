@@ -15,6 +15,23 @@ function generateJWT(userId) {
     return jwt;
 }
 
+function verifyJWT(token) {
+    try {
+        const [headerB64, payloadB64, signature] = token.split('.');
+
+        const expectedSignature = crypto.createHmac('sha256', process.env.JWT_SECRET)
+            .update(`${headerB64}.${payloadB64}`)
+            .digest('base64url');
+
+        if (signature !== expectedSignature) return null;
+
+        const payload = JSON.parse(Buffer.from(payloadB64, 'base64url').toString());
+        return payload;
+    } catch (e) {
+        return null;
+    }
+}
+
 router.post("/login", async (req, res) => {
     console.log("Login route reached: ", req.body);
     try {
@@ -32,7 +49,7 @@ router.post("/login", async (req, res) => {
             return res.status(400).json({"success": false, "message": "Incorrect details"})
         }
 
-        const token = generateJWT(username);
+        const token = generateJWT(user.userId);
 
         res.status(200).json({token});
     } catch(error) {
@@ -55,9 +72,16 @@ router.post("/signup", async (req, res) => {
             return res.status(400).json({"success": false, "message": "Username already exists"})
         }
 
-        await users.insertOne({username, firstName, password})
+        const lastUser = await users.find().sort({userId: -1}).limit(1).toArray();
 
-        const token = generateJWT(username);
+        let newUserId = 1;
+        if(lastUser.length > 0) {
+            newUserId = lastUser[0].userId + 1;
+        }
+
+        await users.insertOne({userId: newUserId, username, firstName, password})
+
+        const token = generateJWT(userId);
 
         res.status(200).json({token});
     } catch(error) {
@@ -65,6 +89,41 @@ router.post("/signup", async (req, res) => {
         console.error(error)
     }
 })
+
+router.get("/me", async (req, res) => {
+    try {
+        const authHeader = req.headers.authorization;
+        if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            return res.status(401).json({ "success": false, "message": "No token provided" });
+        }
+
+        const token = authHeader.split(' ')[1];
+        const decoded = verifyJWT(token);
+
+        if (!decoded) {
+            return res.status(401).json({ "success": false, "message": "Invalid or expired token" });
+        }
+
+        const db = await connectDB();
+        const users = db.collection('users');
+
+        const user = await users.findOne(
+            { userId: decoded.userId },
+            { projection: { password: 0 } } 
+        );
+
+        if (!user) {
+            return res.status(404).json({ "success": false, "message": "User not found" });
+        }
+
+        res.status(200).json({ "success": true, user });
+    } catch (error) {
+        console.error("Profile Fetch Error:", error);
+        res.status(500).json({ "success": false, "message": "Internal server error" });
+    }
+});
+
+
 
 // router.post("/delete", (req, res) => {
 //     console.log("Delete request for: ", req.body);
