@@ -5,15 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TIPP Sheet</title>
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-      crossorigin="anonymous"
-    />
-    <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
     />
+    <link rel="stylesheet" href="./css/main.css" />
     <meta
       name="description"
       content="Mental Health Resource for Distress Tolerance using TIPP (Temperature, Intense Exercise, Paced Breathing, Progressive Muscle Relaxation)"
@@ -38,12 +33,10 @@
           </h5>
           <button
             type="button"
-            class="close"
+            class="btn-close"
             data-dismiss="modal"
             aria-label="Close"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
+          ></button>
         </div>
         <div class="modal-body">
           <h6 class="mb-3">
@@ -94,25 +87,14 @@
 
   <body class="d-flex h-100 text-center text-white bg-dark">
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-      <header class="mb-auto">
-        <div>
-          <a class="nav-link" href="./index.html">
-            <h1 class="float-md-start mb-0">TIPP sheet</h1>
-          </a>
-          <nav class="nav nav-masthead justify-content-center float-md-end">
-            <a class="nav-link" href="./select-practice.html">Practice</a>
-            <a class="nav-link" href="./journey-month.html">My Journey</a>
-            <a class="nav-link" href="./account.html">My Account</a>
-          </nav>
-        </div>
-      </header>
+      <div id="nav-div"></div>
       <main class="px-3">
         <h1>Temperature</h1>
-        <h6>Minimum: 30 seconds</h6>
+        <h2>Minimum: 30 seconds</h2>
         <br />
         <div class="d-flex flex-row">
           <div class="col-1"></div>
-          <div class="d-flex flex-column col-10">
+          <div class="d-flex flex-column col-10 gap-4">
             <div class="card">
               <div class="card-body">
                 <div class="row">
@@ -145,8 +127,8 @@
             <div class="card bg-warning">
               <h5 class="card-header">Caution</h5>
               <div class="card-body">
-                <p class="card-text">
-                  individuals with any heart disorder, a heart rate below normal
+                <p class="card-text text-start">
+                  Individuals with any heart disorder, a heart rate below normal
                   levels due to medications, medical problems, anorexia, or
                   bulimia should perform this only with permission of their
                   medical provider. Those with an allergy to cold should not
@@ -158,7 +140,7 @@
             <div class="card bg-primary-subtle">
               <h5 class="card-header">Background</h5>
               <div class="card-body">
-                <p class="card-text">
+                <p class="card-text text-start">
                   We can take control of our parasympathetic nervous system
                   (PNS) by activating the dive reflex, which causes our heart to
                   slow below its resting heart rate when immersed in very cold
@@ -173,7 +155,7 @@
             <div class="card bg-primary">
               <h5 class="card-header">Instructions</h5>
               <div class="card-body">
-                <div class="card-text">
+                <div class="card-text text-start">
                   The physical effect of cold water is very short-lived. It can
                   be very easy for the intense emotions to resurface if you
                   continue to focus on the emotional trigger. So, once your
@@ -228,20 +210,13 @@
           >
             Finish
           </button>
+          </a>
         </div>
       </main>
 
-      <footer class="mt-auto text-white-50">
-        <a>&copy; 2026 TIPPSheet.com</a>
-        <a>|</a>
-        <a>All rights reserved</a>
-        <!-- Aligned to end -->
-        <ul class = "list-inline">
-          <li class="list-inline-item"> call the national mental health hotline at <a href="tel:988">988</a>.</li>
-          <li class="list-inline-item"> text the crisis text line at <a href="sms:741741">741741</a>.</li>
-        </ul>
-      </footer>
+      <div id="footer-div"></div>
     </div>
+    <script type="module" src="./js/layout.js"></script>
     <script type="module" src="./js/stopwatch.js"></script>
     <script type="module" src="./js/write-session-log.js"></script>
     <script
