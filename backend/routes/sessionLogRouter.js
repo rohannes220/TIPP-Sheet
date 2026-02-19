@@ -1,5 +1,7 @@
 import express from "express";
-import tippDB from "../db/mongoDB.js";
+import {mongoDB} from "../db/mongoDB.js";
+// to keep parity for now
+const tippDB = mongoDB;
 
 const router = express.Router();
 

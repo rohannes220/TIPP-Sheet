@@ -1,9 +1,11 @@
 //mongodDB driver
 import {MongoClient, ObjectId} from "mongodb";
+import dns from "node:dns/promises";
 
+dns.setServers(["1.1.1.1", "1.0.0.1"])
 
 function MongoDB() {
-  const URI = process.env.MONGODB_URI || "mongodb://localhost:27017"
+  const URI = process.env.MONGODB_URI || "mongodb://localhost:27107"
   const me = {};
   const DB_NAME = "TIPPsheet";
   const LOG_COLLECTION = "sessionLogs";
@@ -92,5 +94,35 @@ function MongoDB() {
 
   return me;
 }
-const mongoDB = MongoDB();
-export default mongoDB;
+
+// If we want to change the collection being accessed in the backend in the routes
+// we will have to get the raw database by name and then we can access different collections
+// in different routes. If we use this function, that will work and i would suggest we can keep this
+// instead of having two functions because we don't want multiple connections to the db at once.
+
+export async function connectDB() {
+  process.loadEnvFile()
+  const uri = process.env.MONGODB_URI || "mongodb://localhost:27107";
+  const client = new MongoClient(uri, {
+    family: 4
+  });
+
+  console.log(process.env.MONGODB_URI)
+
+  try {
+    await client.connect();
+    console.log("MongoDB connection estabilished");
+    const db = client.db("TIPPSheet");
+    return db;
+  } catch(error) {
+    console.error("Failed to connect to database", error);
+    throw error;
+  }
+}
+
+export const mongoDB = MongoDB();
+
+// future work: we should keep one (which can be used to access multiple collections depeding on route)
+
+
+
