@@ -14,7 +14,7 @@ const navbarHTML = `<header class="mb-auto">
         </div>
       </header>`
 
-const footerHTML = ` <footer class="mt-auto text-white-50">
+const footerHTML = ` <footer class="mt-auto">
         <a>&copy; 2026 TIPPSheet.com</a>
         <a>|</a>
         <a>All rights reserved</a>

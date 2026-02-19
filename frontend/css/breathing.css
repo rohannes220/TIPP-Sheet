@@ -1,19 +1,46 @@
 /* paced breathing animation */
 :root {
-  --grow-time: 4s;      /* time to expand */
-  --shrink-time: 7s;    /* time to contract */
-  --pause-time: 0.5s;   /* pause at max/min size */
-  --min-size: 80px;
-  --max-size: 180px;
+  --grow-time: 4s; /* time to expand */
+  --shrink-time: 7s; /* time to contract */
+  --pause-time: 0.5s; /* pause at max/min size */
+  --min-size: 160px;
+  --max-size: 300px;
+}
+
+.circle-wrapper {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  margin: auto;
 }
 
 .circle {
+  position: absolute;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.circle.outer {
+  width: var(--max-size);
+  height: var(--max-size);
+  background-color: #f4e8c1;
+}
+
+.circle.inner {
   width: var(--min-size);
   height: var(--min-size);
-  background: #0d6efd; /* Bootstrap primary color */
-  border-radius: 50%;
-  animation: pulse 
-    calc(var(--grow-time) + var(--pause-time) + var(--shrink-time) + var(--pause-time))
+  background-color: #706993;
+}
+
+.circle.middle {
+  background-color: #a0c1b9;
+  animation: pulse
+    calc(
+      var(--grow-time) + var(--pause-time) + var(--shrink-time) +
+        var(--pause-time)
+    )
     infinite ease-in-out;
 }
 
