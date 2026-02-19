@@ -5,15 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TIPP Sheet</title>
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-      crossorigin="anonymous"
-    />
-    <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
     />
+    <link rel="stylesheet" href="./css/main.css" />
     <link rel="stylesheet" href="./css/breathing.css" />
     <meta
       name="description"
@@ -22,27 +17,84 @@
     <meta name="author" content="Ben Piperno and Yash Mahesh Burshe" />
   </head>
 
+  <!-- Modal to log emotional state after TIPP -->
+  <div
+    class="modal fade"
+    id="post-session-modal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            Describe your distress level and emotions
+          </h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h6 class="mb-3">
+            After TIPP, I'd rate my distress at:
+            <strong id="sliderValue">1</strong>
+          </h6>
+          <p>(0 = not at all, 5 = most intense)</p>
+          <input
+            type="range"
+            class="form-range"
+            min="0"
+            max="5"
+            step="1"
+            value="0"
+            id="stepSlider"
+          />
+          <div class="d-flex justify-content-between mt-2">
+            <span>0</span>
+            <span>1</span>
+            <span>2</span>
+            <span>3</span>
+            <span>4</span>
+            <span>5</span>
+          </div>
+          <h6 class="mb-3">The biggest emotion I'm feeling is</h6>
+          <!-- Row 1: Main Options -->
+          <div id="main-options" class="btn-group" role="group"></div>
+          <!-- Row 2: Sub Options -->
+          <div id="sub-options" class="mt-4"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Not this time
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-dismiss="modal"
+            id="save-survey-btn"
+            data-surveytype="post"
+          >
+            Save changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <body class="d-flex h-100 text-center text-white bg-dark">
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-      <header class="mb-auto">
-        <div>
-          <a class="nav-link" href="./index.html">
-            <h1 class="float-md-start mb-0">TIPP sheet</h1>
-          </a>
-          <nav class="nav nav-masthead justify-content-center float-md-end">
-            <a class="nav-link" href="./pre-practice.html">Practice</a>
-            <a class="nav-link" href="./journey-month.html">My Journey</a>
-            <a class="nav-link" href="./account.html">My Account</a>
-          </nav>
-        </div>
-      </header>
+      <div id="nav-div"></div>
       <main class="px-3">
         <h1>Paced Breathing</h1>
         <h6>Minimum: 1 minute</h6>
         <br />
-        <button class="log-progress" data-storagekey="breathingTime">
-          Log Progress
-        </button>
         <div class="d-flex flex-row">
           <div class="col-1">
             <a
@@ -53,12 +105,12 @@
               <i class="bi bi-arrow-left"></i>
             </a>
           </div>
-          <div class="d-flex flex-column col-10">
+          <div class="d-flex flex-column col-10 gap-4">
             <div class="card">
               <div class="card-body">
                 <div class="row">
                   <div class="col-12 text-center">
-                    <h2>Start Exercise?</h2>
+                    <h2>track my time</h2>
                   </div>
                 </div>
                 <div class="row mt-5">
@@ -67,13 +119,9 @@
                       <div class="card-body">
                         <div class="card text-white bg-primary">
                           <div class="card-body text-center" id="time">
-                            <span class="digit" id="hr">00</span>
-                            <span class="txt">Hr</span>
                             <span class="digit" id="min">00</span>
-                            <span class="txt">Min</span>
+                            <span class="txt">:</span>
                             <span class="digit" id="sec">00</span>
-                            <span class="txt">Sec</span>
-                            <span class="digit" id="count">00</span>
                           </div>
                         </div>
                       </div>
@@ -90,7 +138,7 @@
             <div class="card bg-primary-subtle">
               <h5 class="card-header">Background</h5>
               <div class="card-body">
-                <p class="card-text">
+                <p class="card-text text-start">
                   Slowing down our breathing and making our exhale longer than
                   our inhale activates the parasympathetic nervous system,
                   helping regulate our emotions. We always have access to our
@@ -101,14 +149,18 @@
             <div class="card bg-primary-subtle">
               <h5 class="card-header">Instructions</h5>
               <div class="card-body">
-                <p class="card-text">
+                <p class="card-text text-start">
                   Place one hand on your abdomen and notice the rise and fall
                   with each deep breath. Breath in as the circle expands, and
                   breath out as the circle contracts. For some, longer exhales
                   may be uncomfortable and require more practice. Just slowing
                   and deepening your breath can have some effect.
                 </p>
-                <div class="circle"></div>
+                <div class="circle-wrapper">
+                  <div class="circle outer"></div>
+                  <div class="circle middle"></div>
+                  <div class="circle inner"></div>  
+                </div>
               </div>
             </div>
           </div>
@@ -123,23 +175,24 @@
           </div>
         </div>
         <div>
-          <a
-            href="./post-practice.html"
-            class="btn btn-primary"
-            id="done-with-TIPP"
+          <button
+            href="#"
+            class="btn btn-primary log-progress"
+            data-storagekey="breathingTime"
+            data-toggle="modal"
+            id="open-survey-btn"
+            data-target="#post-session-modal"
           >
             Finish
-          </a>
+          </button>
         </div>
       </main>
 
-      <footer class="mt-auto text-white-50">
-        <a>&copy; 2026 TIPPSheet.com</a>
-        <a>|</a>
-        <a>All rights reserved</a>
-      </footer>
+      <div id="footer-div"></div>
     </div>
+    <script type="module" src="./js/layout.js"></script>
     <script type="module" src="./js/stopwatch.js"></script>
+    <script type="module" src="./js/write-session-log.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
       integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"

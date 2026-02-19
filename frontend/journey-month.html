@@ -5,11 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TIPP Sheet</title>
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-      crossorigin="anonymous"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
     />
+    <link rel="stylesheet" href="./css/main.css" />
     <meta
       name="description"
       content="Mental Health Resource for Distress Tolerance using TIPP (Temperature, Intense Exercise, Paced Breathing, Progressive Muscle Relaxation)"
@@ -19,31 +18,15 @@
 
   <body class="d-flex h-100 text-center text-white bg-dark">
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-      <header class="mb-auto">
-        <div>
-          <a class="nav-link" href="./index.html">
-            <h1 class="float-md-start mb-0">TIPP sheet</h1>
-          </a>
-          <nav class="nav nav-masthead justify-content-center float-md-end">
-            <a class="nav-link" href="./pre-practice.html">Practice</a>
-            <a class="nav-link" href="./journey-month.html">My Journey</a>
-            <a class="nav-link" href="./account.html">My Account</a>
-          </nav>
-        </div>
-      </header>
-
+      <div id="nav-div"></div>
       <main class="px-3">
         <h1>My Journey!</h1>
         <div class="container" id="logs">
         </div>
       </main>
-
-      <footer class="mt-auto text-white-50">
-        <a>&copy; 2026 TIPPSheet.com</a>
-        <a>|</a>
-        <a>All rights reserved</a>
-      </footer>
+      <div id="footer-div"></div>
     </div>
+    <script type="module" src="./js/layout.js"></script>
     <script type="module" src="./js/view-delete-session-logs.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.4.1.slim.min.js"

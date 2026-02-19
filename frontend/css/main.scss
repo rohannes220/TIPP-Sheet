@@ -1,0 +1,33 @@
+$brand-primary:   #706993;
+$brand-secondary: #a0c1b9;
+$brand-success:   #70a0af;
+$brand-info:      #70a0af;
+$brand-warning:   #f4e8c1;
+$brand-danger:    #D0021B;
+$brand-dark:      #331e38;
+$brand-light:     #f4e8c1;
+
+//Override Bootstrap’s core color variables
+$primary:   $brand-primary;
+$secondary: $brand-secondary;
+$success:   $brand-success;
+$info:      $brand-info;
+$warning:   $brand-warning;
+$danger:    $brand-danger;
+$dark:      $brand-dark;
+$light:     $brand-light;
+
+// Update the theme color map
+$theme-colors: (
+  "primary":   $primary,
+  "secondary": $secondary,
+  "success":   $success,
+  "info":      $info,
+  "warning":   $warning,
+  "danger":    $danger,
+  "light":     $light,
+  "dark":      $dark
+);
+
+
+@import "../../node_modules/bootstrap/scss/bootstrap";

@@ -61,9 +61,9 @@ const distressLevelLabel = document.getElementById("sliderValue");
 const mainEmotionContainer = document.getElementById("main-options");
 const subEmotionContainer = document.getElementById("sub-options");
 
-//Button to start a TIPP session (and log any information collected)
-const logInfoButton = document.getElementById("survey");
-const openModalButton = document.getElementById("open-modal");
+//Collect user info
+const openSurveyButton = document.getElementById("open-survey-btn"); //open the modal to track user info
+const saveInfoButton = document.getElementById("save-survey-btn");      //save the user info tracked
 
 //------------ FUNCTIONS ------------------------------
 function renderEmotionOptions() {
@@ -173,19 +173,20 @@ mainEmotionContainer.addEventListener("change", (e) => {
 
 subEmotionContainer.addEventListener("change", (e) => {
   emotion = e.target.value;
-})
+});
 
-logInfoButton.addEventListener("click", (e) => {
-    if (logInfoButton.getAttribute("data-surveytype") == "pre") {
+saveInfoButton.addEventListener("click", () => {
+    if (saveInfoButton.getAttribute("data-surveytype") == "pre") {
       postPreSessionLog();
     }
-    else if (logInfoButton.getAttribute("data-surveytype") == "post") {
+    else if (saveInfoButton.getAttribute("data-surveytype") == "post") {
       patchPostSessionLog();
     }
     //disable the button to open the modal again
     //TODO: future work: allow users to revise their submission
-    openModalButton.disabled = true;
-    openModalButton.innerText = "Info submitted"
+    //TODO: upon completion, append a booststrap alert to let the user know their info has been logged
+    openSurveyButton.disabled = true;
+    openSurveyButton.innerText = "Info submitted"
 });
 
 //------------ RUN MISC RENDERING FUNCTIONS --------------------------
