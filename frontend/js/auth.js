@@ -7,8 +7,8 @@ if(loginForm) {
 loginForm.addEventListener('submit', async(e) => {
     e.preventDefault();
 
-    const username = document.getElementById('usernameInput').value;
-    const password = document.getElementById('passwordInput').value;
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
     
     try {
         const response = await fetch('/api/auth/login', {
@@ -42,9 +42,10 @@ if(signupForm) {
 signupForm.addEventListener('submit', async(e) => {
     e.preventDefault();
 
-    const username = document.getElementById('usernameInput').value;
-    const password = document.getElementById('passwordInput').value;
-    const passwordConfirm = document.getElementById('passwordConfirmInput').value;
+    const username = document.getElementById('username').value;
+    const firstName = document.getElementById('firstName').value;
+    const password = document.getElementById('password').value;
+    const passwordConfirm = document.getElementById('passwordConfirm').value;
 
     if(passwordConfirm !== password) {
         errorMessageP.innerHTML = `Error signing up: Passwords do not match`
@@ -57,7 +58,7 @@ signupForm.addEventListener('submit', async(e) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({username, password, passwordConfirm})
+            body: JSON.stringify({username, firstName, password})
         })
 
         const data = await response.json();

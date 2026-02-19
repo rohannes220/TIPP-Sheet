@@ -44,7 +44,7 @@ router.post("/signup", async (req, res) => {
     console.log("Sign up route reached: ", req.body);
 
     try {
-        const {username, password, passwordConfirm} = req.body;
+        const {username, firstName, password, passwordConfirm} = req.body;
 
         const db = await connectDB();
         const users = db.collection('users');
@@ -55,11 +55,7 @@ router.post("/signup", async (req, res) => {
             return res.status(400).json({"success": false, "message": "Username already exists"})
         }
 
-        if(passwordConfirm !== password) {
-            return res.status(400).json({"success": false, "message": "Passwords do not match"})
-        }
-
-        await users.insertOne({username, password})
+        await users.insertOne({username, firstName, password})
 
         const token = generateJWT(username);
 
