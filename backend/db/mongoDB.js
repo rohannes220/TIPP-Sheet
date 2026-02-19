@@ -1,17 +1,9 @@
 //mongodDB driver
 
-import {MongoClient, ObjectId} from "mongodb";
+import {MongoClient, ObjectId, ServerApiVersion} from "mongodb";
 import dns from "node:dns/promises";
 
 dns.setServers(["1.1.1.1", "1.0.0.1"])
-
-function MongoDB() {
-  const URI = process.env.MONGODB_URI || "mongodb://localhost:27107"
-  const me = {};
-  const DB_NAME = "TIPPsheet";
-  const LOG_COLLECTION = "sessionLogs";
-
-import { MongoClient, ObjectId, ServerApiVersion } from "mongodb";
 
 export const collections = Object.freeze({
   SESSION_LOGS: "sessionLogs",
@@ -123,7 +115,7 @@ function MongoDB() {
 // instead of having two functions because we don't want multiple connections to the db at once.
 
 export async function connectDB() {
-  process.loadEnvFile()
+  
   const uri = process.env.MONGODB_URI || "mongodb://localhost:27107";
   const client = new MongoClient(uri, {
     family: 4
