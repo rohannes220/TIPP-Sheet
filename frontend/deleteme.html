@@ -33,14 +33,15 @@
       </header>
       <main>
         <h1>Login</h1>
-        <form action="/api/auth/deleteme" method="post">
+        <form>
           <div class="mb-3">
             <p>Are you sure you want to delete your account?</p>
-          <button class="btn btn-danger">Yes</button>
+          <button id="confirmDeleteBtn" type="button" class="btn btn-danger">Yes</button>
           <a class="btn btn-primary" href="./index.html">No</a>
         </form>
       </main>
     </div>
+    <script type="module" src="./js/delete-account.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
       integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"

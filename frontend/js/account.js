@@ -34,9 +34,17 @@ async function fetchUserProfile() {
 function displayUserData(user) {
    const welcomeHeading = document.getElementById('welcomeMessage');
     const usernameDisplay = document.getElementById('usernameDisplay');
+    const deleteQuestion = document.getElementById('deleteQuestion');
 
-    if (welcomeHeading) welcomeHeading.innerText = `Welcome back, ${user.firstName}!`;
+    if (welcomeHeading) welcomeHeading.innerText = `Welcome back, ${user.first_name}!`;
     if (usernameDisplay) usernameDisplay.innerText = `Username: ${user.username} (ID: ${user.userId})`;
+    if (deleteQuestion) {
+        const a = document.createElement('a');
+        a.href = 'deleteme.html';
+        a.innerText = 'Delete account';
+        a.className = 'delete-link';
+        deleteQuestion.appendChild(a);
+    }
 }
 
 fetchUserProfile();

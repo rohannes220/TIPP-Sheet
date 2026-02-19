@@ -5,8 +5,11 @@ import crypto from "node:crypto"
 const router = Router();
 
 function generateJWT(userId) {
+    const nowInSeconds = Math.floor(Date.now() / 1000);
+    const expiresAt = nowInSeconds + (60 * 60 * 24);
+
     const header = Buffer.from(JSON.stringify({ alg: "HS256", typ: "JWT" })).toString('base64url');
-    const payload = Buffer.from(JSON.stringify({ userId: userId, iat: Date.now() })).toString('base64url');
+    const payload = Buffer.from(JSON.stringify({ userId: userId, iat: nowInSeconds, exp: expiresAt })).toString('base64url');
     const signature = crypto.createHmac('sha256', process.env.JWT_SECRET)
                             .update(`${header}.${payload}`)
                             .digest('base64url');
@@ -26,6 +29,13 @@ function verifyJWT(token) {
         if (signature !== expectedSignature) return null;
 
         const payload = JSON.parse(Buffer.from(payloadB64, 'base64url').toString());
+        const nowInSeconds = Math.floor(Date.now() / 1000);
+
+        if(payload.exp && nowInSeconds > payload.exp) {
+            console.log("Token expired");
+            return null;
+        }
+
         return payload;
     } catch (e) {
         return null;
@@ -79,7 +89,7 @@ router.post("/signup", async (req, res) => {
             newUserId = lastUser[0].userId + 1;
         }
 
-        await users.insertOne({userId: newUserId, username, firstName, password})
+        await users.insertOne({userId: newUserId, username, first_name: firstName, password})
 
         const token = generateJWT(userId);
 
@@ -123,20 +133,41 @@ router.get("/me", async (req, res) => {
     }
 });
 
+router.delete("/delete", async (req, res) => {
+    try {
+        const authHeader = req.headers.authorization;
+        const token = authHeader?.split(' ')[1];
+        const decoded = verifyJWT(token);
 
+        if (!decoded || !decoded.userId) {
+            return res.status(401).json({ "success": false, "message": "Unauthorized" });
+        }
 
-// router.post("/delete", (req, res) => {
-//     console.log("Delete request for: ", req.body);
+        const db = await connectDB();
+        
+        const logResult = await db.collection('sessionLogs').deleteMany({ 
+            userId: decoded.userId 
+        });
+        
+        console.log(`Deleted ${logResult.deletedCount} session logs for user ${decoded.userId}`);
 
-//     try {
-//         // check if jwt is valid
+        const userResult = await db.collection('users').deleteOne({ 
+            userId: decoded.userId 
+        });
 
-//         // delete user data from mongodb
+        if (userResult.deletedCount === 1) {
+            res.status(200).json({ 
+                "success": true, 
+                "message": "Account and all session logs have been removed." 
+            });
+        } else {
+            res.status(404).json({ "success": false, "message": "User not found" });
+        }
 
-//         // delete user from mongodb
-
-//         // return success
-//     }
-// })
+    } catch (error) {
+        console.error("Delete Error:", error);
+        res.status(500).json({ "success": false, "message": "Internal server error" });
+    }
+});
 
 export default router;
