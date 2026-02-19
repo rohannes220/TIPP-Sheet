@@ -32,24 +32,12 @@
         </div>
       </header>
       <main>
-        <h1>Sign Up</h1>
-        <form action="">
+        <h1>Login</h1>
+        <form action="/api/auth/deleteme" method="post">
           <div class="mb-3">
-            <label for="usernameInput" class="form-label">Username</label>
-            <input type="text" class="form-control" id="usernameInput" />
-          </div>
-
-          <div class="mb-3">
-            <label for="passwordInput" class="form-label">Password</label>
-            <input type="password" class="form-control" id="passwordInput" />
-          </div>
-
-          <div class="mb-3">
-            <label for="passwordConfirmInput" class="form-label">Confirm Password</label>
-            <input type="passwordConfirm" class="form-control" id="passwordConfirmInput" />
-          </div>
-
-          <button class="btn btn-primary">Create account</button>
+            <p>Are you sure you want to delete your account?</p>
+          <button class="btn btn-danger">Yes</button>
+          <a class="btn btn-primary" href="./index.html">No</a>
         </form>
       </main>
     </div>
