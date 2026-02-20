@@ -44,6 +44,32 @@ const EMOTION_MAP = {
 
 //------------ API VARIABLES ----------------------
 let userId = 0; //TODO: FUTURE WORK: integrate users collection. For now hardcode to user 0;
+
+const token = localStorage.getItem('token')
+if(token) {
+  try {
+        const response = await fetch('/api/auth/me', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            userId = data.user.userId;
+        } else {
+            console.error("Session invalid:", data.message);
+        }
+    } catch (error) {
+        console.error("Network error:", error);
+    }
+}
+
+console.log("Hello", userId)
+
 let logId = storage.getItem("logId");
 let distressLevel = null;
 let emotion = null;
@@ -109,10 +135,19 @@ async function postPreSessionLog() {
   console.log("FE: POST /api/log with body:", requestBody);
 
   try {
+
+    const token = localStorage.getItem('token');
+
+    if(!token) {
+      return;
+    }
+
     const response = await fetch("/api/log", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(requestBody),
+      headers: { 
+        "Authorization": `Bearer ${token}`,
+        'Content-Type': 'application/json' },
+      body: JSON.stringify(requestBody)
     });
 
     if (!response.ok) {
@@ -135,6 +170,12 @@ async function patchPostSessionLog() {
     return;
   }
 
+  const token = localStorage.getItem('token')
+
+  if(!token) {
+    return;
+  }
+
   const requestBody = {
     distressLevel,
     emotion,
@@ -153,7 +194,9 @@ async function patchPostSessionLog() {
   try {
     const response = await fetch(`/api/log/${logId}`, {
       method: "PATCH",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        'Content-Type': 'application/json'},
       body: JSON.stringify(requestBody),
     });
 

@@ -45,4 +45,22 @@ function displayUserData(user) {
     }
 }
 
+const logoutButton = document.getElementById('logout-btn')
+
+if(logoutButton) {
+    logoutButton.addEventListener("click", logout)
+}
+
+function logout() {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        window.location.href = '/login.html';
+        return;
+    }
+
+    localStorage.removeItem('token');
+    window.location.href = '/index.html';
+}
+
 fetchUserProfile();
