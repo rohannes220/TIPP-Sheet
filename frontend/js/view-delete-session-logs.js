@@ -39,6 +39,7 @@ async function fetchAndRender() {
   });
   const data = await res.json();
   logData = data.logs;
+  updateCumulativeStats(logData);
   renderAgenda();
 }
 
@@ -191,16 +192,15 @@ document.getElementById("editEmotionAfter").value = log.emotionAfter || "";
 
 window.submitEdit = async function () {
   const logId = document.getElementById("editLogId").value;
-  const updatedData = {
-  distressBefore: Number(document.getElementById("editDistressBefore").value),
-  distressAfter: Number(document.getElementById("editDistressAfter").value),
-  emotionBefore: document.getElementById("editEmotionBefore").value || null,
-  emotionAfter: document.getElementById("editEmotionAfter").value || null,
-  temperatureTime: Number(document.getElementById("editTemp").value),
-  intenseExerciseTime: Number(document.getElementById("editExercise").value),
-  breathingTime: Number(document.getElementById("editBreathing").value),
-  relaxationTime: Number(document.getElementById("editRelaxation").value),
-};
+  
+  const updatedDataForBackend = {
+    distressLevel: Number(document.getElementById("editDistressAfter").value),
+    emotion: document.getElementById("editEmotionAfter").value || null,
+    tempTime: Number(document.getElementById("editTemp").value),
+    exerciseTime: Number(document.getElementById("editExercise").value),
+    breathingTime: Number(document.getElementById("editBreathing").value),
+    relaxationTime: Number(document.getElementById("editRelaxation").value),
+  };
 
   try {
     const response = await fetch(`/api/log/${logId}`, {
@@ -209,28 +209,53 @@ window.submitEdit = async function () {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(updatedData),
+      body: JSON.stringify(updatedDataForBackend),
     });
 
     if (response.ok) {
       const index = logData.findIndex((l) => l._id === logId);
-      logData[index] = {
-        ...logData[index],
-        ...updatedData,
-        distressAfter: updatedData.distressLevel,
-      };
-
-      if (window.$) {
-        window.$("#editModal").modal("hide");
+      if (index !== -1) {
+        logData[index] = {
+          ...logData[index],
+          distressBefore: Number(document.getElementById("editDistressBefore").value),
+          emotionBefore: document.getElementById("editEmotionBefore").value,
+          distressAfter: updatedDataForBackend.distressLevel,
+          emotionAfter: updatedDataForBackend.emotion,
+          tempTime: updatedDataForBackend.tempTime,
+          exerciseTime: updatedDataForBackend.exerciseTime,
+          breathingTime: updatedDataForBackend.breathingTime,
+          relaxationTime: updatedDataForBackend.relaxationTime,
+        };
       }
 
+      if (window.$) window.$("#editModal").modal("hide");
+      updateCumulativeStats(logData);
       renderAgenda();
-    } else {
-      alert("Failed to update log.");
     }
   } catch (err) {
     console.error("Error updating log:", err);
   }
 };
+
+function updateCumulativeStats(logs) {
+  const totals = { T: 0, I: 0, P: 0, R: 0 };
+
+  logs.forEach((log) => {
+    const before = Number(log.distressBefore) || 0;
+    const after = Number(log.distressAfter) || 0;
+    const reduction = before - after;
+    const pointsDropped = reduction > 0 ? reduction : 0;
+
+    if (Number(log.tempTime) > 0) totals.T += pointsDropped;
+    if (Number(log.exerciseTime) > 0) totals.I += pointsDropped;
+    if (Number(log.breathingTime) > 0) totals.P += pointsDropped;
+    if (Number(log.relaxationTime) > 0) totals.R += pointsDropped;
+  });
+
+  document.getElementById("stat-T").innerText = totals.T;
+  document.getElementById("stat-I").innerText = totals.I;
+  document.getElementById("stat-P").innerText = totals.P;
+  document.getElementById("stat-R").innerText = totals.R;
+}
 
 fetchAndRender();
