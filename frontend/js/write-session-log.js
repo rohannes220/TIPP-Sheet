@@ -63,7 +63,14 @@ const subEmotionContainer = document.getElementById("sub-options");
 
 //Collect user info
 const openSurveyButton = document.getElementById("open-survey-btn"); //open the modal to track user info
-const saveInfoButton = document.getElementById("save-survey-btn");      //save the user info tracked
+const saveInfoButton = document.getElementById("save-survey-btn"); //save the user info tracked
+
+//display previously logged data
+const preTIPPDistress = document.getElementById("preTIPPDistress");
+const preTIPPEmotion = document.getElementById("preTIPPEmotion");
+
+//Delete log button
+const deleteLogButton = document.getElementById("delete-log-btn");
 
 //------------ FUNCTIONS ------------------------------
 function renderEmotionOptions() {
@@ -74,7 +81,7 @@ function renderEmotionOptions() {
       "beforeend",
       `
             <input type="radio" class="btn-check" name="main" id="${id}" value="${key}">
-            <label class="btn btn-outline-primary" for="${id}">${key}</label>
+            <label class="btn btn-primary" for="${id}">${key}</label>
             `,
     );
   });
@@ -82,14 +89,14 @@ function renderEmotionOptions() {
 
 function renderSubEmotionOptions(mainEmotion) {
   subEmotionContainer.innerHTML = `
-        <h5>Does a more specific sub-emotion for <strong>${mainEmotion}</strong> fit better?</h5>
+        <h6>Does a more specific sub-emotion for <strong>${mainEmotion}</strong> fit better?</h6>
         <div class="btn-group" role="group">
             ${EMOTION_MAP[mainEmotion]
               .map((sub, i) => {
                 const id = `sub-${i}`;
                 return `
                         <input type="radio" class="btn-check" name="sub" id="${id}" value="${sub}">
-                        <label class="btn btn-outline-secondary" for="${id}">${sub}</label>
+                        <label class="btn btn-info" for="${id}">${sub}</label>
                     `;
               })
               .join("")}
@@ -104,8 +111,8 @@ async function postPreSessionLog() {
   try {
     const response = await fetch("/api/log", {
       method: "POST",
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(requestBody)
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(requestBody),
     });
 
     if (!response.ok) {
@@ -129,19 +136,24 @@ async function patchPostSessionLog() {
   }
 
   const requestBody = {
-    distressLevel, 
-    emotion, 
-    tempTime, 
-    exerciseTime, 
-    breathingTime, 
-    relaxationTime
+    distressLevel,
+    emotion,
+    tempTime,
+    exerciseTime,
+    breathingTime,
+    relaxationTime,
   };
-  console.log("FE: PATCH /api/log/:logId requestBody: ", requestBody, "logId ", logId);
+  console.log(
+    "FE: PATCH /api/log/:logId requestBody: ",
+    requestBody,
+    "logId ",
+    logId,
+  );
 
   try {
     const response = await fetch(`/api/log/${logId}`, {
       method: "PATCH",
-      headers: {'Content-Type': 'application/json'},
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(requestBody),
     });
 
@@ -158,6 +170,69 @@ async function patchPostSessionLog() {
   }
 }
 
+async function deleteSessionLog() {
+  console.log("FE: DELETE /api/log/:logId", logId);
+  try {
+    const response = await fetch(`/api/log/${logId}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (!response.ok) {
+      console.error("FE: failed to delete log daata: ", response.status);
+      return;
+    }
+
+    console.log("Success! ", response);
+  } catch (err) {
+    console.error("Network error deleting log: ", err);
+  }
+}
+
+async function getSessionLog() {
+  console.log("FE: GET /api/log/:logId", logId);
+  try {
+    const response = await fetch(`/api/log/${logId}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (!response.ok) {
+      console.error("FE: failed to get log daata: ", response.status);
+      return {};
+    }
+    const data = await response.json();
+    console.log("Success! ", data.log);
+    return data.log || {};
+  } catch (err) {
+    console.error("Network error deleting log: ", err);
+    return {};
+  }
+}
+
+async function renderPreTIPPmodalInfo() {
+  console.log("Trying to pull up pre-tipp session data!");
+  let preDistress;
+  let preEmotion;
+
+  //try to retrieve with a get call
+  try {
+    const data = await getSessionLog();
+    console.log("data:", data);
+    const {distressBefore, emotionBefore} = data;
+    console.log("fields: ", distressBefore, emotionBefore);
+    preDistress = data.distressBefore || "not recorded";
+    preEmotion = data.emotionBefore || "not recorded";
+  } catch (err) {
+    console.error("Error getting previous log data", err);
+    preDistress = "not found";
+    preEmotion = "not found";
+  } finally {
+    //update the html
+    preTIPPEmotion.innerText = preEmotion;
+    preTIPPDistress.innerText = preDistress;
+  }
+}
 
 //------------ EVENT LISTENERS ------------------------
 
@@ -175,19 +250,32 @@ subEmotionContainer.addEventListener("change", (e) => {
   emotion = e.target.value;
 });
 
+if (preTIPPDistress && preTIPPDistress) {
+  openSurveyButton.addEventListener("click", async () => {
+    renderPreTIPPmodalInfo()
+  });
+}
+
 saveInfoButton.addEventListener("click", () => {
-    if (saveInfoButton.getAttribute("data-surveytype") == "pre") {
-      postPreSessionLog();
-    }
-    else if (saveInfoButton.getAttribute("data-surveytype") == "post") {
-      patchPostSessionLog();
-    }
-    //disable the button to open the modal again
-    //TODO: future work: allow users to revise their submission
-    //TODO: upon completion, append a booststrap alert to let the user know their info has been logged
-    openSurveyButton.disabled = true;
-    openSurveyButton.innerText = "Info submitted"
+  if (saveInfoButton.getAttribute("data-surveytype") == "pre") {
+    postPreSessionLog();
+  } else if (saveInfoButton.getAttribute("data-surveytype") == "post") {
+    patchPostSessionLog();
+  }
+  //disable the button to open the modal again
+  //TODO: future work: allow users to revise their submission
+  //TODO: upon completion, append a booststrap alert to let the user know their info has been logged
+  openSurveyButton.disabled = true;
+  openSurveyButton.innerText = "Info submitted";
 });
+
+if (deleteLogButton) {
+  deleteLogButton.addEventListener("click", () => {
+    deleteSessionLog();
+    deleteLogButton.innerText = "Info Session data removed";
+    deleteLogButton.disabled = true;
+  });
+}
 
 //------------ RUN MISC RENDERING FUNCTIONS --------------------------
 renderEmotionOptions();
