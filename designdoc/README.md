@@ -52,7 +52,6 @@ Operations related to logging TIPP technique effectiveness. The log resource mod
 | PATCH     | `/api/log/{logId}` | log technique(s) used, distress, and emotion after using TIPP |
 | DELETE    | `/api/log/{logId}` | delete a specified log                                        |
 | PUT       | `/api/log/{logID}` | update a specified log                                        |
-| GET       | `/api/log/findLogs`| returns user's logs filtered by `startDate` and `endDate`     |
 
 
 ## User
