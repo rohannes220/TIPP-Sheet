@@ -3,8 +3,9 @@ TIPP Sheet is a mental‑health resource platform designed to help users practic
 
 # Usage
 * Visit the deployed version [here](link.html)
-* Alternatively, clone this repo and build a local version using the following command:
-  `npm start`
+* Alternatively, clone this repo and build a local version using the following steps:
+  1. `npm install`
+  2. `npm start`
 
 # Links
 - [Deployment URL](https://www.markdownguide.org "View the website as an end user")
