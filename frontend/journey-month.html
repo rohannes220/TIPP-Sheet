@@ -21,13 +21,135 @@
       <div id="nav-div"></div>
       <main class="px-3">
         <h1>My Journey!</h1>
-        <div class="container" id="logs">
+        <div class="container px-3 mt-5">
+          <div class="card bg-primary p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h2 id="monthYearDisplay" class="text-white">Your Journey</h2>
+              <div class="btn-group">
+                <button id="prevMonth" class="btn btn-secondary">
+                  Prev Month
+                </button>
+                <button id="nextMonth" class="btn btn-secondary">
+                  Next Month
+                </button>
+              </div>
+            </div>
+
+            <div
+              id="agendaView"
+              class="agenda-container"
+              style="max-height: 600px; overflow-y: auto"
+            ></div>
+          </div>
         </div>
       </main>
       <div id="footer-div"></div>
     </div>
+    <div
+      class="modal fade"
+      id="logModal"
+      tabindex="-1"
+      aria-labelledby="logModalLabel"
+      aria-hidden="true"
+    >
+    </div>
+    <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark text-white">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit Session Log</h5>
+          </div>
+          <div class="modal-body">
+            <form id="editForm">
+              <input type="hidden" id="editLogId" />
+              <div class="row g-3">
+                <div class="col-6">
+                  <label class="form-label text-white-50"
+                    >Distress (Before)</label
+                  >
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="editDistressBefore"
+                    min="1"
+                    max="10"
+                  />
+                </div>
+                <div class="col-6">
+                  <label class="form-label small text-white-50"
+                    >Distress (After)</label
+                  >
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="editDistressAfter"
+                    min="1"
+                    max="10"
+                  />
+                </div>
+                <div class="col-6">
+                  <label class="form-label text-white-50"
+                    >Temp Time (s)</label
+                  >
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="editTemp"
+                  />
+                </div>
+                <div class="col-6">
+                  <label class="form-label text-white-50"
+                    >Exercise Time (s)</label
+                  >
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="editExercise"
+                  />
+                </div>
+                <div class="col-6">
+                  <label class="form-label text-white-50"
+                    >Breathing Time (s)</label
+                  >
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="editBreathing"
+                  />
+                </div>
+                <div class="col-6">
+                  <label class="form-label text-white-50"
+                    >Relaxation Time (s)</label
+                  >
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="editRelaxation"
+                  />
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              onclick="submitEdit()"
+            >
+              Save Changes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
     <script type="module" src="./js/layout.js"></script>
-    <script type="module" src="./js/view-delete-session-logs.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
       integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
@@ -43,5 +165,6 @@
       integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
       crossorigin="anonymous"
     ></script>
+    <script type="module" src="./js/view-delete-session-logs.js"></script>
   </body>
 </html>
