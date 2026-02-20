@@ -68,8 +68,6 @@ if (token) {
   }
 }
 
-console.log("Hello", userId);
-
 let logId = storage.getItem("logId");
 let distressLevel = null;
 let emotion = null;
@@ -77,6 +75,8 @@ let tempTime = Number(storage.getItem("tempTime")) || 0;
 let exerciseTime = Number(storage.getItem("exerciseTime")) || 0;
 let breathingTime = Number(storage.getItem("breathingTime")) || 0;
 let relaxationTime = Number(storage.getItem("relaxationTime")) || 0;
+
+console.log(tempTime, exerciseTime, breathingTime, relaxationTime)
 
 //------------ DOM REFERENCES ---------------------
 //UI elements to select and display a user's current distress level
@@ -208,7 +208,10 @@ async function patchPostSessionLog() {
 
     const data = await response.json().catch(() => {});
     console.log("Success! Response: ", data);
-    storage.clear(); //clear out kv pairs on this domain.
+    storage.clear();
+    if(token) {
+      localStorage.setItem('token', token);
+    }
   } catch (err) {
     console.error("Network error patching log: ", err);
   }
