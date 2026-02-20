@@ -1,5 +1,3 @@
-const nameDiv = document.getElementById('username-div');
-
 async function fetchUserProfile() {
     const token = localStorage.getItem('token');
 
@@ -32,12 +30,12 @@ async function fetchUserProfile() {
 }
 
 function displayUserData(user) {
-   const welcomeHeading = document.getElementById('welcomeMessage');
+   const firstNameDisplay = document.getElementById('firstNameDisplay');
     const usernameDisplay = document.getElementById('usernameDisplay');
     const deleteQuestion = document.getElementById('deleteQuestion');
 
-    if (welcomeHeading) welcomeHeading.innerText = `Welcome back, ${user.first_name}!`;
-    if (usernameDisplay) usernameDisplay.innerText = `Username: ${user.username} (ID: ${user.userId})`;
+    if (firstNameDisplay) firstNameDisplay.innerText = `${user.first_name}`;
+    if (usernameDisplay) usernameDisplay.innerText = `${user.username}`;
     if (deleteQuestion) {
         const a = document.createElement('a');
         a.href = 'deleteme.html';
