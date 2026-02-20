@@ -34,7 +34,7 @@ function displayUserData(user) {
     const usernameDisplay = document.getElementById('usernameDisplay');
     const deleteQuestion = document.getElementById('deleteQuestion');
 
-    if (firstNameDisplay) firstNameDisplay.innerText = `${user.first_name}`;
+    if (firstNameDisplay) firstNameDisplay.innerText = `${user.firstName}`;
     if (usernameDisplay) usernameDisplay.innerText = `${user.username}`;
     if (deleteQuestion) {
         const a = document.createElement('a');

@@ -16,30 +16,45 @@
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
       <div id="nav-div"></div>
       <main class="px-3">
-        <h1>TIPP sheet</h1>
-        <p class="lead">
-          <b>TIPP sheet</b> is a platform designed to aid individuals in
-          practicing the evidence-based distress tolerance TIPP (Temperature,
-          Intense Exercise, Paced Breathing, Progressive Muscle Relaxation)
-          skill from Dialectical Behavioral Therapy (DBT). Sign up and sign into
-          your account to track your practice sessions and review which
-          techniques have been the most impactful, or start to practice TIPP
-          skills right away as a guest!
-        </p>
-        <p class="lead">
-          <a
-            href="./select-practice.html"
-            class="btn btn-lg btn-primary fw-bold"
-            >Start Practice</a
-          >
-        </p>
-        <div id="login-prompt">
+        <div class="row justify-content-center w-100 m-0">
+          <div class="col-11 col-sm-8 col-md-6 col-lg-4">
+            <div class="card p-4 text-start">
+              <h1 class="mb-4 text-center">Update Name</h1>
+
+              <form id="updateNameForm">
+                <div class="mb-3">
+                  <label for="firstName" class="form-label"
+                    >New First Name</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="firstName"
+                    id="firstNameInput"
+                    placeholder="Loading current name..."
+                    required
+                  />
+                </div>
+
+                <div class="d-grid gap-2 mt-4">
+                  <button type="submit" class="btn btn-primary">
+                    Save Changes
+                  </button>
+                  <a href="./account.html" class="btn btn-warning"
+                    >Cancel</a
+                  >
+                </div>
+              </form>
+
+              <p class="mt-3 mb-0 text-center" id="statusMessage"></p>
+            </div>
+          </div>
         </div>
       </main>
       <div id="footer-div"></div>
     </div>
+    <script type="module" src="./js/update-account.js"></script>
     <script type="module" src="./js/layout.js"></script>
-    <script type="module" src="./js/index.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
       integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"

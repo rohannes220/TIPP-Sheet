@@ -10,7 +10,7 @@ function deleteAccount() {
     }
 
     try {
-      const resp = await fetch("/api/auth/delete", {
+      const resp = await fetch("/api/auth/me", {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
