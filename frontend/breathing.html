@@ -26,7 +26,7 @@
     aria-labelledby="exampleModalLabel"
     aria-hidden="true"
   >
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">
@@ -34,16 +34,20 @@
           </h5>
           <button
             type="button"
-            class="close"
+            class="btn-close"
             data-dismiss="modal"
             aria-label="Close"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
+          ></button>
         </div>
         <div class="modal-body">
           <h6 class="mb-3">
-            After TIPP, I'd rate my distress at:
+            Before TIPP, distress:
+            <strong id="preTIPPDistress">10</strong>
+            and emotion:
+            <strong id="preTIPPEmotion">HTMLVALUE</strong>
+          </h6>
+          <h6 class="mb-3">
+            After TIPP, My distress is at:
             <strong id="sliderValue">1</strong>
           </h6>
           <p>(0 = not at all, 5 = most intense)</p>
@@ -71,8 +75,8 @@
           <div id="sub-options" class="mt-4"></div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">
-            Not this time
+          <button type="button" class="btn btn-danger" id="delete-log-btn">
+            Delete this practice session.
           </button>
           <button
             type="button"
@@ -159,7 +163,7 @@
                 <div class="circle-wrapper">
                   <div class="circle outer"></div>
                   <div class="circle middle"></div>
-                  <div class="circle inner"></div>  
+                  <div class="circle inner"></div>
                 </div>
               </div>
             </div>

@@ -28,10 +28,11 @@ router.post("", async (req, res) => {
 
 //get a log by its logid
 router.get("/:logId", async (req, res) => {
+  const logId = req.params.logId;
+  console.log(`sessionLogRouter: GET /api/log/${logId}`);
   try {
-    const logId = Number(req.params.logId);
-    const log = await mongoDB.findOne(collections.SESSION_LOGS, { logId });
-    res.json({ log });
+    const log = await mongoDB.findOne(collections.SESSION_LOGS, logId);
+    res.status(200).json({ log });
   } catch (err) {
     console.log("ERROR: sessionLogRouter GET/log/:logId:", err);
     res.status(500).json({ error: "Internal Server Error", log: {} });
@@ -40,10 +41,10 @@ router.get("/:logId", async (req, res) => {
 
 //get a list of all of a user's logs in a given time range
 router.get("", async (req, res) => {
-  console.log("received request for /api/log");
+  console.log(`sessionLogRouter: GET /api/log/`);
   try {
     const logs = await mongoDB.find(collections.SESSION_LOGS);
-    res.json({ logs });
+    res.status(200).json({ logs });
   } catch (err) {
     console.log("ERROR: sessionLogRouter:", err);
     res.status(500).json({ error: "Internal Server Error", logs: [] });
@@ -53,7 +54,7 @@ router.get("", async (req, res) => {
 //delete a specific log
 router.delete("/:logId", async (req, res) => {
   const logId = req.params.logId;
-  console.log(`sessionLogRouter: PATCH /api/${logId}`);
+  console.log(`sessionLogRouter: DELETE /api/${logId}`);
   try {
     const result = await mongoDB.deleteOne(
       collections.SESSION_LOGS,

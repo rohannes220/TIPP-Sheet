@@ -16,7 +16,7 @@
     <meta name="author" content="Ben Piperno and Yash Mahesh Burshe" />
   </head>
 
-    <!-- Modal to log emotional state after TIPP -->
+  <!-- Modal to log emotional state after TIPP -->
   <div
     class="modal fade"
     id="post-session-modal"
@@ -25,17 +25,29 @@
     aria-labelledby="exampleModalLabel"
     aria-hidden="true"
   >
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">
             Describe your distress level and emotions
           </h5>
-          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+          <button
+            type="button"
+            class="btn-close"
+            data-dismiss="modal"
+            aria-label="Close"
+          ></button>
         </div>
         <div class="modal-body">
           <h6 class="mb-3">
-            After TIPP, I'd rate my distress at: <strong id="sliderValue">1</strong>
+            Before TIPP, distress:
+            <strong id="preTIPPDistress">10</strong>
+            and emotion:
+            <strong id="preTIPPEmotion">HTMLVALUE</strong>
+          </h6>
+          <h6 class="mb-3">
+            After TIPP, My distress is at:
+            <strong id="sliderValue">1</strong>
           </h6>
           <p>(0 = not at all, 5 = most intense)</p>
           <input
@@ -62,8 +74,8 @@
           <div id="sub-options" class="mt-4"></div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">
-            Not this time
+          <button type="button" class="btn btn-danger" id="delete-log-btn">
+            Delete this practice session.
           </button>
           <button
             type="button"
