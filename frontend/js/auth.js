@@ -21,8 +21,6 @@ loginForm.addEventListener('submit', async(e) => {
 
         const data = await response.json();
 
-        console.log(data);
-
         if(response.ok) {
             localStorage.setItem('token', data.token);
             
@@ -62,8 +60,6 @@ signupForm.addEventListener('submit', async(e) => {
         })
 
         const data = await response.json();
-
-        console.log(data);
 
         if(response.ok) {
             localStorage.setItem('token', data.token);

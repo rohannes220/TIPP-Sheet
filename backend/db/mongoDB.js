@@ -53,7 +53,6 @@ function MongoDB() {
       const data = await collection.findOne(
           { _id: new ObjectId(idString)}
         );
-      console.log(data);
       return data;
     } catch (err) {
       console.error("ERROR fetching session logs from MongoDB: ", err);

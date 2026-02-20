@@ -76,8 +76,6 @@ let exerciseTime = Number(storage.getItem("exerciseTime")) || 0;
 let breathingTime = Number(storage.getItem("breathingTime")) || 0;
 let relaxationTime = Number(storage.getItem("relaxationTime")) || 0;
 
-console.log(tempTime, exerciseTime, breathingTime, relaxationTime)
-
 //------------ DOM REFERENCES ---------------------
 //UI elements to select and display a user's current distress level
 const distressSlider = document.getElementById("stepSlider");
