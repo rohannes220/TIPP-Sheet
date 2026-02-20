@@ -48,7 +48,7 @@ Operations related to logging TIPP technique effectiveness. The log resource mod
 ```
 | Operation | Endpoint       | Description                                                   |
 | --------- | -------------- | --------------------------------------------------------------| 
-| POST      | `/api/log`         | log distress levels and emotion before using TIPP             |
+| POST      | `/api/log/all`         | log distress levels and emotion before using TIPP             |
 | PATCH     | `/api/log/{logId}` | log technique(s) used, distress, and emotion after using TIPP |
 | DELETE    | `/api/log/{logId}` | delete a specified log                                        |
 | PUT       | `/api/log/{logID}` | update a specified log                                        |
