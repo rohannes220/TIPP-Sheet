@@ -38,7 +38,7 @@ function displayUserData(user) {
     if (usernameDisplay) usernameDisplay.innerText = `${user.username}`;
     if (deleteQuestion) {
         const a = document.createElement('a');
-        a.href = 'deleteme.html';
+        a.href = 'delete-account.html';
         a.innerText = 'Delete account';
         a.className = 'delete-link';
         deleteQuestion.appendChild(a);
