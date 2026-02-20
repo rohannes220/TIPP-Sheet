@@ -88,9 +88,7 @@ router.patch("/:logId", async (req, res) => {
       breathingTime,
       relaxationTime,
     };
-    const result = await mongoDB.updateOne(collections.SESSION_LOGS, logId, {
-      $set: recordAttributes,
-    });
+    const result = await mongoDB.updateOne(collections.SESSION_LOGS, logId, recordAttributes);
     console.log(result);
     if (result.modifiedCount === 0) {
       return res.status(404).json({

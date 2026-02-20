@@ -120,12 +120,10 @@ export async function connectDB() {
     family: 4
   });
 
-  console.log(process.env.MONGODB_URI)
-
   try {
     await client.connect();
     console.log("MongoDB connection estabilished");
-    const db = client.db("TIPPSheet");
+    const db = client.db(DB_NAME);
     return db;
   } catch(error) {
     console.error("Failed to connect to database", error);
