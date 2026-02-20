@@ -4,11 +4,42 @@ import { verifyJWT } from "../utils/jwtUtils.js";
 import { ObjectId } from "mongodb";
 const router = express.Router();
 
+//get a list of all of a user's logs in a given time range
+router.get("/all", async (req, res) => {
+  console.log("received request for /api/log");
+
+  try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res
+        .status(401)
+        .json({ success: false, message: "No token provided" });
+    }
+
+    const token = authHeader.split(" ")[1];
+    const decoded = verifyJWT(token);
+
+    if (!decoded) {
+      return res
+        .status(401)
+        .json({ success: false, message: "Invalid or expired token" });
+    }
+
+    const userQuery = { userId: Number(decoded.userId) };
+
+    const logs = await mongoDB.find(collections.SESSION_LOGS, userQuery);
+
+    res.status(200).json({ logs });
+  } catch (err) {
+    console.log("ERROR: sessionLogRouter:", err);
+    res.status(500).json({ error: "Internal Server Error", logs: [] });
+  }
+});
+
 //create a new log, return the log id
-router.post("", async (req, res) => {
+router.post("/", async (req, res) => {
   console.log("POST /api/log body: ", req.body);
   try {
-
     const authHeader = req.headers.authorization;
     const token = authHeader?.split(" ")[1];
     const decoded = verifyJWT(token);
@@ -54,27 +85,21 @@ router.get("/:logId", async (req, res) => {
 
     const currentUserId = Number(decoded.userId);
 
-    console.log("Current user id", currentUserId)
-
-
     const logId = req.params.logId;
 
-    console.log(logId)
-
     const log = await mongoDB.findOne(collections.SESSION_LOGS, logId);
-
-    console.log(log)
-
 
     if (!log) {
       return res.status(404).json({ success: false, message: "Log not found" });
     }
 
     if (log.userId !== currentUserId) {
-      console.warn(`Unauthorized access attempt by user ${currentUserId} on log ${logId}`);
-      return res.status(403).json({ 
-        success: false, 
-        message: "Forbidden: Access denied" 
+      console.warn(
+        `Unauthorized access attempt by user ${currentUserId} on log ${logId}`,
+      );
+      return res.status(403).json({
+        success: false,
+        message: "Forbidden: Access denied",
       });
     }
 
@@ -82,38 +107,6 @@ router.get("/:logId", async (req, res) => {
   } catch (err) {
     console.log("ERROR: sessionLogRouter GET/log/:logId:", err);
     res.status(500).json({ error: "Internal Server Error", log: {} });
-  }
-});
-
-//get a list of all of a user's logs in a given time range
-router.get("", async (req, res) => {
-  console.log("received request for /api/log");
-
-  try {
-    const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      return res
-        .status(401)
-        .json({ success: false, message: "No token provided" });
-    }
-
-    const token = authHeader.split(" ")[1];
-    const decoded = verifyJWT(token);
-
-    if (!decoded) {
-      return res
-        .status(401)
-        .json({ success: false, message: "Invalid or expired token" });
-    }
-
-    const userQuery = { userId: Number(decoded.userId) };
-
-    const logs = await mongoDB.find(collections.SESSION_LOGS, userQuery);
-
-    res.status(200).json({ logs });
-  } catch (err) {
-    console.log("ERROR: sessionLogRouter:", err);
-    res.status(500).json({ error: "Internal Server Error", logs: [] });
   }
 });
 
@@ -140,9 +133,9 @@ router.delete("/:logId", async (req, res) => {
 
     const currentUserId = Number(decoded.userId);
 
-    const log = await mongoDB.findOne(collections.SESSION_LOGS, {
-      _id: new ObjectId(logId),
-    });
+    const logIdObject = new ObjectId(logId);
+
+    const log = await mongoDB.findOne(collections.SESSION_LOGS, logIdObject);
 
     if (!log) {
       return res.status(404).json({ success: false, message: "Log not found" });
@@ -176,7 +169,7 @@ router.patch("/:logId", async (req, res) => {
   try {
     const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      console.log("No token provided")
+      console.log("No token provided");
       return res
         .status(401)
         .json({ success: false, message: "No token provided" });
@@ -192,8 +185,6 @@ router.patch("/:logId", async (req, res) => {
     }
 
     const currentUserId = Number(decoded.userId);
-
-    console.log(new ObjectId(logId))
 
     const existingLog = await mongoDB.findOne(collections.SESSION_LOGS, logId);
 
@@ -230,8 +221,6 @@ router.patch("/:logId", async (req, res) => {
       logId,
       recordAttributes,
     );
-
-    console.log(result);
 
     if (result.modifiedCount === 0) {
       return res.status(404).json({
