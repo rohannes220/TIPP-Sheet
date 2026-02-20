@@ -45,30 +45,30 @@ const EMOTION_MAP = {
 //------------ API VARIABLES ----------------------
 let userId = 0; //TODO: FUTURE WORK: integrate users collection. For now hardcode to user 0;
 
-const token = localStorage.getItem('token')
-if(token) {
+const token = localStorage.getItem("token");
+if (token) {
   try {
-        const response = await fetch('/api/auth/me', {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
-        });
+    const response = await fetch("/api/auth/me", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
 
-        const data = await response.json();
+    const data = await response.json();
 
-        if (response.ok) {
-            userId = data.user.userId;
-        } else {
-            console.error("Session invalid:", data.message);
-        }
-    } catch (error) {
-        console.error("Network error:", error);
+    if (response.ok) {
+      userId = data.user.userId;
+    } else {
+      console.error("Session invalid:", data.message);
     }
+  } catch (error) {
+    console.error("Network error:", error);
+  }
 }
 
-console.log("Hello", userId)
+console.log("Hello", userId);
 
 let logId = storage.getItem("logId");
 let distressLevel = null;
@@ -135,19 +135,19 @@ async function postPreSessionLog() {
   console.log("FE: POST /api/log with body:", requestBody);
 
   try {
+    const token = localStorage.getItem("token");
 
-    const token = localStorage.getItem('token');
-
-    if(!token) {
+    if (!token) {
       return;
     }
 
     const response = await fetch("/api/log", {
       method: "POST",
-      headers: { 
-        "Authorization": `Bearer ${token}`,
-        'Content-Type': 'application/json' },
-      body: JSON.stringify(requestBody)
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
     });
 
     if (!response.ok) {
@@ -170,9 +170,9 @@ async function patchPostSessionLog() {
     return;
   }
 
-  const token = localStorage.getItem('token')
+  const token = localStorage.getItem("token");
 
-  if(!token) {
+  if (!token) {
     return;
   }
 
@@ -195,8 +195,9 @@ async function patchPostSessionLog() {
     const response = await fetch(`/api/log/${logId}`, {
       method: "PATCH",
       headers: {
-        "Authorization": `Bearer ${token}`,
-        'Content-Type': 'application/json'},
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(requestBody),
     });
 
@@ -216,9 +217,18 @@ async function patchPostSessionLog() {
 async function deleteSessionLog() {
   console.log("FE: DELETE /api/log/:logId", logId);
   try {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      return;
+    }
+
     const response = await fetch(`/api/log/${logId}`, {
       method: "DELETE",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
     });
 
     if (!response.ok) {
@@ -235,9 +245,20 @@ async function deleteSessionLog() {
 async function getSessionLog() {
   console.log("FE: GET /api/log/:logId", logId);
   try {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      return;
+    }
+
+    console.log("THIS IS THE LOG ID", logId)
+
     const response = await fetch(`/api/log/${logId}`, {
       method: "GET",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
     });
 
     if (!response.ok) {
@@ -262,7 +283,7 @@ async function renderPreTIPPmodalInfo() {
   try {
     const data = await getSessionLog();
     console.log("data:", data);
-    const {distressBefore, emotionBefore} = data;
+    const { distressBefore, emotionBefore } = data;
     console.log("fields: ", distressBefore, emotionBefore);
     preDistress = data.distressBefore || "not recorded";
     preEmotion = data.emotionBefore || "not recorded";
@@ -295,7 +316,7 @@ subEmotionContainer.addEventListener("change", (e) => {
 
 if (preTIPPDistress && preTIPPDistress) {
   openSurveyButton.addEventListener("click", async () => {
-    renderPreTIPPmodalInfo()
+    renderPreTIPPmodalInfo();
   });
 }
 

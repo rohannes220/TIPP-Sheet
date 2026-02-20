@@ -48,23 +48,27 @@ Operations related to logging TIPP technique effectiveness. The log resource mod
 ```
 | Operation | Endpoint       | Description                                                   |
 | --------- | -------------- | --------------------------------------------------------------| 
-| POST      | `/log`         | log distress levels and emotion before using TIPP             |
-| PATCH     | `/log/{logId}` | log technique(s) used, distress, and emotion after using TIPP |
-| DELETE    | `/log/{logId}` | delete a specified log                                        |
-| PUT       | `/log/{logID}` | update a specified log                                        |
-| GET       | `/log/findLogs`| returns user's logs filtered by `startDate` and `endDate`     |
+| POST      | `/api/log`         | log distress levels and emotion before using TIPP             |
+| PATCH     | `/api/log/{logId}` | log technique(s) used, distress, and emotion after using TIPP |
+| DELETE    | `/api/log/{logId}` | delete a specified log                                        |
+| PUT       | `/api/log/{logID}` | update a specified log                                        |
+| GET       | `/api/log/findLogs`| returns user's logs filtered by `startDate` and `endDate`     |
+
 
 ## User
 Operations related to user account management. The user resource model is:
 ```json
 {
-  "userID": "uuid",
-  "passwordHash": "string" 
+  "userId": "number",
+  "firstName": "string",
+  "username": "string",
+  "password": "string"
 }
 ```
-| Operation | Endpoint        | Description                                   |
-| --------  | --------------- | --------------------------------------------- | 
-| POST      | `/user`         | creates user                                  |
-| DELETE    | `/user/{userId}`| deletes user and all associated logs          | 
-| POST      | `/user/login`   | authenticate user and issue a session token   |
-| POST      | `/user/logout`  | invalidate current session token              | 
+| Operation | Endpoint       | Description                                                   |
+| --------- | -------------- | --------------------------------------------------------------| 
+| POST       | `/api/auth/login`| Authorize a user's credentials and return a JWT     |
+| POST       | `/api/auth/signup`| Create a user account and return a JWT     |
+| GET       | `/api/auth/me`| Return user information like username, first name and id     |
+| DELETE       | `/api/auth/me`| Delete a user account along with all user associated data in sessionLogs collection     |
+| PATCH       | `/api/auth/me`| Update a user's first name     |

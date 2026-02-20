@@ -17,12 +17,12 @@ router.post("", async (req, res) => {
       return res.status(401).json({ success: false, message: "Unauthorized" });
     }
 
-    const authUserId = Number(decoded.userId);
+    const userId = Number(decoded.userId);
 
     const { distressLevel, emotion } = req.body;
 
     const newSessionLog = {
-      authUserId,
+      userId,
       emotionBefore: emotion,
       distressBefore: distressLevel,
       timestamp: new Date().toISOString(),
@@ -53,11 +53,18 @@ router.get("/:logId", async (req, res) => {
     }
 
     const currentUserId = Number(decoded.userId);
-    const logId = Number(req.params.logId);
 
-    const log = await mongoDB.findOne(collections.SESSION_LOGS, { 
-      logId: logId 
-    });
+    console.log("Current user id", currentUserId)
+
+
+    const logId = req.params.logId;
+
+    console.log(logId)
+
+    const log = await mongoDB.findOne(collections.SESSION_LOGS, logId);
+
+    console.log(log)
+
 
     if (!log) {
       return res.status(404).json({ success: false, message: "Log not found" });
@@ -186,9 +193,9 @@ router.patch("/:logId", async (req, res) => {
 
     const currentUserId = Number(decoded.userId);
 
-    const existingLog = await mongoDB.findOne(collections.SESSION_LOGS, {
-      _id: new ObjectId(logId),
-    });
+    console.log(new ObjectId(logId))
+
+    const existingLog = await mongoDB.findOne(collections.SESSION_LOGS, logId);
 
     if (!existingLog) {
       return res.status(404).json({ success: false, message: "Log not found" });
